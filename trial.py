@@ -5,16 +5,124 @@ from tkinter import scrolledtext
 from tkinter import messagebox
 #the inbuilt csv function allows to read and open csv files
 import csv
+import json
+from tkinter.filedialog import asksaveasfile
 
 #setting font
 LARGE_FONT = ("Verdana", 12)
 
+setup = {  #dictionary of tuples, where order is [static, minimum_value, maximum_value]
+    'suspensions.ini': {
+    #parameters broken up by file location
+        '[FRONT]': { 
+            'TOE_OUT': [], #toe_out_l; length increase of steering link in mm
+            'STATIC_CAMBER': [], #camber_F
+            'DAMP_BUMP': [], #damp_slow_bump_F
+            'DAMP_FAST_BUMP': [], #damp_fast_bump_F
+            'DAMP_REBOUND': [], #damp_slow_rebound_F
+            'DAMP_FAST_REBOUND': [], #damp_fast_rebound_F
+            'SPRING_RATE': [], #wheel_rate_F
+            'ROD_LENGTH': [],  #rod_length_F
+            'PACKER_RANGE': [], #packer_range_F; max sus travel
+            'BUMP_STOP_RATE': [], #bump_stop_F; packer rate
+            'TRACK': [] #front track
+        }, '[HEAVE_FRONT]': {
+            'ROD_LENGTH': [],
+            'SPRING_RATE': [],
+            'DAMP_BUMP': [],
+            'DAMP_FAST_BUMP': [],
+            'DAMP_REBOUND': [],
+            'DAMP_FAST_REBOUND': []
+        }, '[REAR]': {
+            'TOE_OUT': [], #toe_out_R; lenght of increase of steering link
+            'STATIC_CAMBER': [], #camber_R
+            'DAMP_BUMP': [], #damp_slow_bump_R
+            'DAMP_FAST_BUMP': [], #damp_fast_bump_R
+            'DAMP_REBOUND': [], #damp_slow_rebound_R
+            'DAMP_FAST_REBOUND': [], #damp_fast_rebound_R
+            'SPRING_RATE': [], #wheel_rate_R
+            'ROD_LENGTH': [], #rod_length_R
+            'PACKER_RANGE': [], #packer_range_R
+            'BUMP_STOP_RATE': [], #bump_stop_R
+            'TRACK': [] #rear track
+        }, '[HEAVE_REAR]': {
+            'ROD_LENGTH': [],
+            'SPRING_RATE': [],
+            'DAMP_BUMP': [],
+            'DAMP_FAST_BUMP': [],
+            'DAMP_REBOUND': [],
+            'DAMP_FAST_REBOUND': []
+        }, '[ARB]': {
+            'FRONT': [], #arb_F
+            'REAR': [] #arb_R
+        }, '[BASIC]': {
+            'WHEELBASE': [], #wheelbase
+            'CG_LOCATION': [] #center of mass
+        } 
+    }, 'tyres.ini': {
+        #tyres.ini file
+        '[FRONT]': {
+            'PRESSURE_STATIC': [] #pressure_F
+        }, '[REAR]': {
+            'PRESSURE_STATIC': [] #pressure_R                  
+            }
+    }, 'drivetrain.ini': {
+        #drivetrain.ini
+        '[DIFFERENTIAL]': {
+            'POWER': [],  #differential on power lock
+            'COAST': [], #differential off power lock
+            'PRELOAD': [] #diff preload
+        }
+    }, 'brakes.ini': {
+        #brakes.ini
+        '[DATA]': {
+            'FRONT_SHARE': [], #brake bias
+            'MAX_TORQUE': [] #brake power
+        }
+    }
+}
+
+# def writetoJSONFile(path, setup):
+#     json.dump(setup, path)
+
+def populate_setup(ini_name, list1, list2, header1, header2):
+    # Reset each of the values for header1 to enter new values
+    for parameter in setup[ini_name][header1]:
+        setup[ini_name][header1][parameter] = []
+    for value in list1:
+        setup_value = value.get()
+        for parameter in setup[ini_name][header1]:
+            if setup[ini_name][header1][parameter] == []:
+                setup[ini_name][header1][parameter] = setup_value
+                break
+    if list2 == []:
+        return
+    else:
+        # Reset each of the values for header2 to enter new values
+        for parameter in setup[ini_name][header2]:
+            setup[ini_name][header2][parameter] = []
+        for value in list2:
+            setup_value = value.get()
+            for parameter in setup[ini_name][header2]:
+                if setup[ini_name][header2][parameter] == []:
+                    setup[ini_name][header2][parameter] = setup_value
+                    break
+    return
+        
+
+def submit_function():
+    files = [('JSON File', '*.json')]
+    fileName = 'trial_data'
+    filepos = asksaveasfile(filetypes = files,defaultextension = json, initialfile = fileName)
+    # writetoJSONFile(filepos, setup)
+    json.dump(setup, filepos)
+
 
 #_______________________________________________________________________________
-#_______________________SWITCHING FRAMES________________________________________________________
+#_______________________________SWITCHING FRAMES________________________________
 class Frames(tk.Tk):
 
-#__________________________INITIALISE_____________________________________________________
+#________________________________INITIALISE_____________________________________
     def __init__(self, *args, **kwargs):  #args and kwargs are used to pass arguments in the functions
         
         tk.Tk.__init__(self, *args, **kwargs )
@@ -29,9 +137,8 @@ class Frames(tk.Tk):
 
 
         self.frames = {}
-        # a for loop to switch between the frames
+        # loop to switch between the frames
         #main page is the create array frame
-        #sort function is the sort and search page
         #help page is for online help
         for F in (MainPage, Help, Suspensions, Suspensions_Heave, Suspensions_Other, Drivetrain, Tyres, Brakes):
             frame = F(container, self)
@@ -41,16 +148,16 @@ class Frames(tk.Tk):
             frame.grid(row=0, column=0, sticky="nsew")
             frame.config(bg='#e8f8f5') #colour scheme
         self.show_frame(MainPage)
-#____________________________SHOW FRAME___________________________________________________
+#_________________________________SHOW FRAME____________________________________
     def show_frame(self, cont):
         #raising the frame to the wanted frame
         frame = self.frames[cont]
         frame.tkraise()
 
 #_______________________________________________________________________________
-#___________________________CREATE ARRAY PAGE____________________________________________________
+#______________________________CREATE ARRAY PAGE________________________________
 class MainPage(tk.Frame):
-#________________________INITIALISE_______________________________________________________
+#_________________________________INITIALISE____________________________________
     #arrangement of buttons and input and labels
     #you need to use controller to pass variables between classes
     def __init__(self, parent, controller):
@@ -107,6 +214,10 @@ class MainPage(tk.Frame):
         btn.place(x=300, y=400)#placement
         btn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
 
+        submitbtn = tk.Button(self, text="Submit Values", command= lambda: submit_function())
+        submitbtn.place(y=690, x=350)#placement
+        submitbtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+
 
 
 #_________________________CLOSE PROGRAM______________________________________________________
@@ -136,9 +247,9 @@ class Help(tk.Frame):
         mainpagebtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
 
 #_______________________________________________________________________________
-#________________________ABOUT US PAGE______________________________________________________        
+#________________________________ABOUT US PAGE__________________________________       
 class Suspensions(tk.Frame):
-#_____________________INITIALISE__________________________________________________________
+#_________________________________INITIALISE____________________________________
     def __init__(self, parent, controller):
         
         tk.Frame.__init__(self, parent)
@@ -181,11 +292,17 @@ class Suspensions(tk.Frame):
             inputE.config(bg='#255D83', fg='#e8f8f5')#colour scheme
             rear_input.append(inputE)
             label_y = label_y +50
-
+    
         #defining it as a button
         mainpagebtn = tk.Button(self, text="Main page",command=lambda: controller.show_frame(MainPage))
         mainpagebtn.place(y=690, x=50)#placement
         mainpagebtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+
+        # button to enter suspension values into setup dictionary
+        # if giving in raw lists don't work, then just apply .get() to each value and make new lists (this could be done in submit_function)
+        submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('suspensions.ini', front_input, rear_input, '[FRONT]', '[REAR]'))
+        submitbtn.place(y=690, x=350)#placement
+        submitbtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
 
 #________________________ABOUT US PAGE______________________________________________________        
 class Suspensions_Heave(tk.Frame):
@@ -237,6 +354,10 @@ class Suspensions_Heave(tk.Frame):
         mainpagebtn.place(y=690, x=50)#placement
         mainpagebtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
 
+        submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('suspensions.ini', front_input, rear_input, '[HEAVE_FRONT]', '[HEAVE_REAR]'))
+        submitbtn.place(y=690, x=350)#placement
+        submitbtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+
 #_______________________________________________________________________________
 #________________________ABOUT US PAGE______________________________________________________        
 class Suspensions_Other(tk.Frame):
@@ -287,6 +408,10 @@ class Suspensions_Other(tk.Frame):
         mainpagebtn = tk.Button(self, text="Main page",command=lambda: controller.show_frame(MainPage))
         mainpagebtn.place(y=690, x=50)#placement
         mainpagebtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+
+        submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('suspensions.ini', front_input, rear_input, '[ARB]', '[BASIC]'))
+        submitbtn.place(y=690, x=350)#placement
+        submitbtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
 #_______________________________________________________________________________
 #________________________ABOUT US PAGE______________________________________________________        
 class Tyres(tk.Frame):
@@ -338,6 +463,10 @@ class Tyres(tk.Frame):
         mainpagebtn.place(y=690, x=50)#placement
         mainpagebtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
 
+        submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('tyres.ini', front_input, rear_input, '[FRONT]', '[REAR]'))
+        submitbtn.place(y=690, x=350)#placement
+        submitbtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+
 #_______________________________________________________________________________
 #________________________ABOUT US PAGE______________________________________________________        
 class Drivetrain(tk.Frame):
@@ -372,6 +501,10 @@ class Drivetrain(tk.Frame):
         mainpagebtn = tk.Button(self, text="Main page",command=lambda: controller.show_frame(MainPage))
         mainpagebtn.place(y=690, x=50)#placement
         mainpagebtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+
+        submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('drivetrain.ini', front_input, [], '[DIFFERENTIAL]', ''))
+        submitbtn.place(y=690, x=350)#placement
+        submitbtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
 
 #_______________________________________________________________________________
 #________________________ABOUT US PAGE______________________________________________________        
@@ -408,13 +541,21 @@ class Brakes(tk.Frame):
         mainpagebtn.place(y=690, x=50)#placement
         mainpagebtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
 
+        submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('brakes.ini', front_input, [], '[DATA]', ''))
+        submitbtn.place(y=690, x=350)#placement
+        submitbtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
 
 
 #_______________________________________________________________________________
 #______________________MAIN PROGRAM_________________________________________________________
-window = Frames()#defining what the window will show --- it will have frames(pages)
-window.title('Redback Asseto Corsa Launcher')
-window.config(bg='#e8f8f5')#colour scheme
-window.geometry("800x800")#size of window
-window.resizable(width=False, height=False)#not letting the user resize the window
-window.mainloop()#running the gui
+def main():
+    window = Frames()#defining what the window will show --- it will have frames(pages)
+    window.title('Redback Asseto Corsa Launcher')
+    window.config(bg='#e8f8f5')#colour scheme
+    window.geometry("800x800")#size of window
+    window.resizable(width=False, height=False)#not letting the user resize the window
+    window.mainloop()#running the gui
+
+# Basically checks that the code is being run tby the user, and not imported by some other functions
+if __name__ == '__main__':
+    main()
