@@ -79,6 +79,15 @@ setup = {  #dictionary of tuples, where order is [static, minimum_value, maximum
             'FRONT_SHARE': [], #brake bias
             'MAX_TORQUE': [] #brake power
         }
+    }, 'race.ini': {
+        #race.ini
+        '[RACE]': {
+            "TRACK": [],
+            "MODEL": []
+        }, "[TEMPERATURE]": {
+            "AMBIENT": [],
+            "ROAD": []
+        }
     }
 }
 
@@ -140,7 +149,7 @@ class Frames(tk.Tk):
         # loop to switch between the frames
         #main page is the create array frame
         #help page is for online help
-        for F in (MainPage, Help, Suspensions, Suspensions_Heave, Suspensions_Other, Drivetrain, Tyres, Brakes):
+        for F in (MainPage, Help, General, Suspensions, Suspensions_Heave, Suspensions_Other, Drivetrain, Tyres, Brakes):
             frame = F(container, self)
 
             self.frames[F] = frame
@@ -177,28 +186,32 @@ class MainPage(tk.Frame):
         btnSort.place(x=0, y=0)#placement
         btnSort.config(bg='#255D83', fg='#e8f8f5')#colour scheme
 
-        btnSort = tk.Button(self, text="Suspensions",command=lambda: controller.show_frame(Suspensions))
+        btnSort = tk.Button(self, text="General",command=lambda: controller.show_frame(General))
         btnSort.place(x=38, y=0)#placement
         btnSort.config(bg='#255D83', fg='#e8f8f5')#colour scheme
 
+        btnSort = tk.Button(self, text="Suspensions",command=lambda: controller.show_frame(Suspensions))
+        btnSort.place(x=88, y=0)#placement
+        btnSort.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+
         btnSort = tk.Button(self, text="Suspensions Heave",command=lambda: controller.show_frame(Suspensions_Heave))
-        btnSort.place(x=114, y=0)#placement
+        btnSort.place(x=164, y=0)#placement
         btnSort.config(bg='#255D83', fg='#e8f8f5')#colour scheme
 
         btnSort = tk.Button(self, text="Suspensions Other",command=lambda: controller.show_frame(Suspensions_Other))
-        btnSort.place(x=225, y=0)#placement
+        btnSort.place(x=275, y=0)#placement
         btnSort.config(bg='#255D83', fg='#e8f8f5')#colour scheme
 
         btnSort = tk.Button(self, text="Tyres",command=lambda: controller.show_frame(Tyres))
-        btnSort.place(x=333, y=0)#placement
+        btnSort.place(x=383, y=0)#placement
         btnSort.config(bg='#255D83', fg='#e8f8f5')#colour scheme
 
         btnSort = tk.Button(self, text="Drivetrain",command=lambda: controller.show_frame(Drivetrain))
-        btnSort.place(x=370, y=0)#placement
+        btnSort.place(x=420, y=0)#placement
         btnSort.config(bg='#255D83', fg='#e8f8f5')#colour scheme
 
         btnSort = tk.Button(self, text="Brakes",command=lambda: controller.show_frame(Brakes))
-        btnSort.place(x=431, y=0)#placement
+        btnSort.place(x=481, y=0)#placement
         btnSort.config(bg='#255D83', fg='#e8f8f5')#colour scheme
 
         #a exit button to exit the gui
@@ -214,7 +227,7 @@ class MainPage(tk.Frame):
         btn.place(x=300, y=400)#placement
         btn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
 
-        submitbtn = tk.Button(self, text="Submit Values", command= lambda: submit_function())
+        submitbtn = tk.Button(self, text="Save Setup", command= lambda: submit_function())
         submitbtn.place(y=690, x=350)#placement
         submitbtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
 
@@ -245,6 +258,61 @@ class Help(tk.Frame):
         mainpagebtn = tk.Button(self, text="Main page",command=lambda: controller.show_frame(MainPage))
         mainpagebtn.place(y=470, x=50)#placement
         mainpagebtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+
+#____________________________________________________________________________________________
+#_________________________________________GENERAL_______________________________________________
+class General(tk.Frame):
+#_____________________INITIALISE__________________________________________________________
+    def __init__(self, parent, controller):
+        
+        tk.Frame.__init__(self, parent)
+        label = tk.Label(self, text="General", font=("Arial", 25))#defining it as a label
+        label.pack(pady=10, padx=10)#placement
+        label.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+
+        lblE = tk.Label(self,  text='RACE', font=LARGE_FONT)#defining it as a label
+        lblE.place(x=10, y=50)#placement
+        lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+
+        lblE = tk.Label(self,  text='TEMPERATURES', font=LARGE_FONT)#defining it as a label
+        lblE.place(x=410, y=50)#placement
+        lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+
+        arb_params = ['TRACK', 'CAR']
+        BASIC_params = ['AIR TEMP', 'ROAD TEMP']
+
+        label_y = 100
+        front_input = []
+        for i in arb_params:
+            lblE = tk.Label(self,  text=i)#defining it as a label
+            lblE.place(x=10, y=label_y)#placement
+            lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+            inputE = Entry(self)#defining it as a inputbox
+            inputE.place(x=180, y=label_y)#placement
+            inputE.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+            front_input.append(inputE)
+            label_y = label_y +50
+
+        label_y = 100
+        rear_input = []
+        for i in BASIC_params:
+            lblE = tk.Label(self,  text=i)#defining it as a label
+            lblE.place(x=410, y=label_y)#placement
+            lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+            inputE = Entry(self)#defining it as a inputbox
+            inputE.place(x=580, y=label_y)#placement
+            inputE.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+            rear_input.append(inputE)
+            label_y = label_y +50
+
+        #defining it as a button
+        mainpagebtn = tk.Button(self, text="Main page",command=lambda: controller.show_frame(MainPage))
+        mainpagebtn.place(y=690, x=50)#placement
+        mainpagebtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+
+        submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('race.ini', front_input, rear_input, '[RACE]', '[TEMPERATURE]'))
+        submitbtn.place(y=690, x=350)#placement
+        submitbtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
 
 #_______________________________________________________________________________
 #________________________________ABOUT US PAGE__________________________________       
@@ -556,6 +624,28 @@ def main():
     window.resizable(width=False, height=False)#not letting the user resize the window
     window.mainloop()#running the gui
 
-# Basically checks that the code is being run tby the user, and not imported by some other functions
+# Basically checks that th code is being run tby the user, and not imported by some other functions
 if __name__ == '__main__':
     main()
+
+
+
+
+
+'''
+Click submit button:
+submit_function(ini file (str), header (str, e.g. [FRONT]), list):
+	populate_setup(ini file (str), header (str, e.g. [FRONT]), setup, list)
+	
+populate_setup(ini, header, setup, list):
+for value in list:
+	setup_value = value.get()
+	for parameter in setup[ini][header]:
+		setup[ini][header][parameter] = setup_value
+return
+
+
+FOR NOW PLAN IS:
+two buttons for front and rear 
+run submit_function for each by giving name of ini file and header 
+'''
