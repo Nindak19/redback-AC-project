@@ -1,8 +1,11 @@
+#Sahil And Cullan - 2022
+#Redbakc Racing UNSW Data Science 
 #importing tkinter and the message boxes and scrolledtext widget
 from tkinter import *
 import tkinter as tk
 from tkinter import scrolledtext
 from tkinter import messagebox
+from PIL import Image, ImageTk
 #the inbuilt csv function allows to read and open csv files
 import csv
 import json
@@ -155,7 +158,7 @@ class Frames(tk.Tk):
             self.frames[F] = frame
 
             frame.grid(row=0, column=0, sticky="nsew")
-            frame.config(bg='#e8f8f5') #colour scheme
+            frame.config(bg='black') #colour scheme
         self.show_frame(MainPage)
 #_________________________________SHOW FRAME____________________________________
     def show_frame(self, cont):
@@ -172,69 +175,75 @@ class MainPage(tk.Frame):
     def __init__(self, parent, controller):
 
         tk.Frame.__init__(self, parent)
-        # label 
-        lblE = tk.Label(self,  text='daniel avocado')#defining it as a label
-        lblE.place(x=10, y=50)#placement
-        lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
-        inputE = Entry(self)#defining it as a inputbox
-        inputE.place(x=100, y=50)#placement
-        inputE.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        
+        image2 = Image.open("hi3.jpg")
+        image2 = image2.resize((960,540))
+        test2 = ImageTk.PhotoImage(image2)
+        label2 = tk.Label(self, image=test2, borderwidth=0)
+        label2.image = test2
+        label2.place(x=-100, y=50)
 
+        image1 = Image.open("hi.png")
+        #image1 = image1.resize((300,300))
+        test = ImageTk.PhotoImage(image1)
+        label1 = tk.Label(self, image=test, borderwidth=0)
+        label1.image = test
+        label1.place(x=575, y=-50)
         #button to switch to other pages, lambda is a must when switching pages
         #defining it as a button
         btnSort = tk.Button(self, text="Main",command=lambda: controller.show_frame(MainPage))
         btnSort.place(x=0, y=0)#placement
-        btnSort.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        btnSort.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
         btnSort = tk.Button(self, text="General",command=lambda: controller.show_frame(General))
         btnSort.place(x=38, y=0)#placement
-        btnSort.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        btnSort.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
         btnSort = tk.Button(self, text="Suspensions",command=lambda: controller.show_frame(Suspensions))
         btnSort.place(x=88, y=0)#placement
-        btnSort.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        btnSort.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
         btnSort = tk.Button(self, text="Suspensions Heave",command=lambda: controller.show_frame(Suspensions_Heave))
-        btnSort.place(x=164, y=0)#placement
-        btnSort.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        btnSort.place(x=163, y=0)#placement
+        btnSort.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
         btnSort = tk.Button(self, text="Suspensions Other",command=lambda: controller.show_frame(Suspensions_Other))
-        btnSort.place(x=275, y=0)#placement
-        btnSort.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        btnSort.place(x=274, y=0)#placement
+        btnSort.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
         btnSort = tk.Button(self, text="Tyres",command=lambda: controller.show_frame(Tyres))
-        btnSort.place(x=383, y=0)#placement
-        btnSort.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        btnSort.place(x=382, y=0)#placement
+        btnSort.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
         btnSort = tk.Button(self, text="Drivetrain",command=lambda: controller.show_frame(Drivetrain))
-        btnSort.place(x=420, y=0)#placement
-        btnSort.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        btnSort.place(x=419, y=0)#placement
+        btnSort.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
         btnSort = tk.Button(self, text="Brakes",command=lambda: controller.show_frame(Brakes))
-        btnSort.place(x=481, y=0)#placement
-        btnSort.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        btnSort.place(x=480, y=0)#placement
+        btnSort.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
         #a exit button to exit the gui
         #defining it as a button
         #use lambda to pass the main window as a function to destroy it in the module
-        btnExit =  tk.Button(self, text="Exit", command=lambda: self.exit(window))
-        btnExit.place(x=400, y=400)#placement
-        btnExit.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        btnExit =  tk.Button(self, text="Exit", command=lambda: self.exit(controller))
+        btnExit.place(x=470, y=700)#placement
+        btnExit.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
         #button to switch to help page, the command lambda is a must when switching pages
         #defining it as a button
         btn = tk.Button(self, text="Help",command=lambda: controller.show_frame(Help))
-        btn.place(x=300, y=400)#placement
-        btn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        btn.place(x=524, y=00)#placement
+        btn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
         submitbtn = tk.Button(self, text="Save Setup", command= lambda: submit_function())
-        submitbtn.place(y=690, x=350)#placement
-        submitbtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        submitbtn.place(y=700, x=350)#placement
+        submitbtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
 
 
 #_________________________CLOSE PROGRAM______________________________________________________
-    def exit(self,window):
+    def exit(self, window):
         #submodule which links to the exit button to close the program
         
         window.destroy()
@@ -268,7 +277,7 @@ class General(tk.Frame):
         tk.Frame.__init__(self, parent)
         label = tk.Label(self, text="General", font=("Arial", 25))#defining it as a label
         label.pack(pady=10, padx=10)#placement
-        label.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+        label.config(bg='black', fg='white')#colour scheme
 
         lblE = tk.Label(self,  text='RACE', font=LARGE_FONT)#defining it as a label
         lblE.place(x=10, y=50)#placement
@@ -289,7 +298,7 @@ class General(tk.Frame):
             lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=180, y=label_y)#placement
-            inputE.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+            inputE.config(bg='#74000c', fg='#74000c')#colour scheme
             front_input.append(inputE)
             label_y = label_y +50
 
@@ -619,12 +628,27 @@ class Brakes(tk.Frame):
 def main():
     window = Frames()#defining what the window will show --- it will have frames(pages)
     window.title('Redback Asseto Corsa Launcher')
+
+    # image2 = Image.open("hi3.jpg")
+    # image2 = image2.resize((960,540))
+    # test2 = ImageTk.PhotoImage(image2)
+    # label2 = tk.Label(image=test2, borderwidth=0)
+    # label2.image = test2
+    # label2.place(x=-100, y=50)
+
+    # image1 = Image.open("hi.png")
+    # #image1 = image1.resize((300,300))
+    # test = ImageTk.PhotoImage(image1)
+    # label1 = tk.Label(image=test, borderwidth=0)
+    # label1.image = test
+    # label1.place(x=575, y=-50)
+
     window.config(bg='#e8f8f5')#colour scheme
     window.geometry("800x800")#size of window
     window.resizable(width=False, height=False)#not letting the user resize the window
     window.mainloop()#running the gui
 
-# Basically checks that th code is being run tby the user, and not imported by some other functions
+# Basically checks that the code is being run tby the user, and not imported by some other functions
 if __name__ == '__main__':
     main()
 
