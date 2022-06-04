@@ -265,7 +265,7 @@ class Help(tk.Frame):
         #defining it as a button
         mainpagebtn = tk.Button(self, text="Main page",command=lambda: controller.show_frame(MainPage))
         mainpagebtn.place(y=470, x=50)#placement
-        mainpagebtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        mainpagebtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
 #____________________________________________________________________________________________
 #_________________________________________GENERAL_______________________________________________
@@ -294,7 +294,7 @@ class General(tk.Frame):
         for i in arb_params:
             lblE = tk.Label(self,  text=i)#defining it as a label
             lblE.place(x=10, y=label_y)#placement
-            lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+            lblE.config(bg='black', fg='white')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=180, y=label_y)#placement
             inputE.config(bg='#74000c', fg='white')#colour scheme
@@ -306,7 +306,7 @@ class General(tk.Frame):
         for i in BASIC_params:
             lblE = tk.Label(self,  text=i)#defining it as a label
             lblE.place(x=410, y=label_y)#placement
-            lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+            lblE.config(bg='black', fg='white')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=580, y=label_y)#placement
             inputE.config(bg='#74000c', fg='white')#colour scheme
@@ -316,11 +316,11 @@ class General(tk.Frame):
         #defining it as a button
         mainpagebtn = tk.Button(self, text="Main page",command=lambda: controller.show_frame(MainPage))
         mainpagebtn.place(y=690, x=50)#placement
-        mainpagebtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        mainpagebtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
         submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('race.ini', front_input, rear_input, '[RACE]', '[TEMPERATURE]'))
         submitbtn.place(y=690, x=350)#placement
-        submitbtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        submitbtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
 #_______________________________________________________________________________
 #________________________________ABOUT US PAGE__________________________________       
@@ -350,7 +350,7 @@ class Suspensions(tk.Frame):
         for i in susp_params:
             lblE = tk.Label(self,  text=i)#defining it as a label
             lblE.place(x=10, y=label_y)#placement
-            lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+            lblE.config(bg='black', fg='white')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=180, y=label_y)#placement
             inputE.config(bg='#74000c', fg='white')#colour scheme
@@ -362,7 +362,7 @@ class Suspensions(tk.Frame):
         for i in susp_params:
             lblE = tk.Label(self,  text=i)#defining it as a label
             lblE.place(x=410, y=label_y)#placement
-            lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+            lblE.config(bg='black', fg='white')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=580, y=label_y)#placement
             inputE.config(bg='#74000c', fg='white')#colour scheme
@@ -372,13 +372,13 @@ class Suspensions(tk.Frame):
         #defining it as a button
         mainpagebtn = tk.Button(self, text="Main page",command=lambda: controller.show_frame(MainPage))
         mainpagebtn.place(y=690, x=50)#placement
-        mainpagebtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        mainpagebtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
         # button to enter suspension values into setup dictionary
         # if giving in raw lists don't work, then just apply .get() to each value and make new lists (this could be done in submit_function)
         submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('suspensions.ini', front_input, rear_input, '[FRONT]', '[REAR]'))
         submitbtn.place(y=690, x=350)#placement
-        submitbtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        submitbtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
 #________________________ABOUT US PAGE______________________________________________________        
 class Suspensions_Heave(tk.Frame):
@@ -406,7 +406,7 @@ class Suspensions_Heave(tk.Frame):
         for i in susp_params:
             lblE = tk.Label(self,  text=i)#defining it as a label
             lblE.place(x=10, y=label_y)#placement
-            lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+            lblE.config(bg='black', fg='white')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=180, y=label_y)#placement
             inputE.config(bg='#74000c', fg='white')#colour scheme
@@ -418,7 +418,7 @@ class Suspensions_Heave(tk.Frame):
         for i in susp_params:
             lblE = tk.Label(self,  text=i)#defining it as a label
             lblE.place(x=410, y=label_y)#placement
-            lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+            lblE.config(bg='black', fg='white')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=580, y=label_y)#placement
             inputE.config(bg='#74000c', fg='white')#colour scheme
@@ -428,11 +428,11 @@ class Suspensions_Heave(tk.Frame):
         #defining it as a button
         mainpagebtn = tk.Button(self, text="Main page",command=lambda: controller.show_frame(MainPage))
         mainpagebtn.place(y=690, x=50)#placement
-        mainpagebtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        mainpagebtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
         submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('suspensions.ini', front_input, rear_input, '[HEAVE_FRONT]', '[HEAVE_REAR]'))
         submitbtn.place(y=690, x=350)#placement
-        submitbtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        submitbtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
 #_______________________________________________________________________________
 #________________________ABOUT US PAGE______________________________________________________        
@@ -443,15 +443,15 @@ class Suspensions_Other(tk.Frame):
         tk.Frame.__init__(self, parent)
         label = tk.Label(self, text="Suspensions Other", font=("Arial", 25))#defining it as a label
         label.pack(pady=10, padx=10)#placement
-        label.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+        label.config(bg='black', fg='white')#colour scheme
 
         lblE = tk.Label(self,  text='ARB', font=LARGE_FONT)#defining it as a label
         lblE.place(x=10, y=50)#placement
-        lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+        lblE.config(bg='black', fg='white')#colour scheme
 
         lblE = tk.Label(self,  text='BASIC', font=LARGE_FONT)#defining it as a label
         lblE.place(x=410, y=50)#placement
-        lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+        lblE.config(bg='black', fg='white')#colour scheme
 
         arb_params = ['FRONT', 'REAR']
         BASIC_params = ['WHEELBASE', 'CG_LOCATION']
@@ -461,7 +461,7 @@ class Suspensions_Other(tk.Frame):
         for i in arb_params:
             lblE = tk.Label(self,  text=i)#defining it as a label
             lblE.place(x=10, y=label_y)#placement
-            lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+            lblE.config(bg='black', fg='white')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=180, y=label_y)#placement
             inputE.config(bg='#74000c', fg='white')#colour scheme
@@ -473,7 +473,7 @@ class Suspensions_Other(tk.Frame):
         for i in BASIC_params:
             lblE = tk.Label(self,  text=i)#defining it as a label
             lblE.place(x=410, y=label_y)#placement
-            lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+            lblE.config(bg='black', fg='white')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=580, y=label_y)#placement
             inputE.config(bg='#74000c', fg='white')#colour scheme
@@ -483,11 +483,11 @@ class Suspensions_Other(tk.Frame):
         #defining it as a button
         mainpagebtn = tk.Button(self, text="Main page",command=lambda: controller.show_frame(MainPage))
         mainpagebtn.place(y=690, x=50)#placement
-        mainpagebtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        mainpagebtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
         submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('suspensions.ini', front_input, rear_input, '[ARB]', '[BASIC]'))
         submitbtn.place(y=690, x=350)#placement
-        submitbtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        submitbtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 #_______________________________________________________________________________
 #________________________ABOUT US PAGE______________________________________________________        
 class Tyres(tk.Frame):
@@ -498,15 +498,15 @@ class Tyres(tk.Frame):
         tk.Frame.__init__(self, parent)
         label = tk.Label(self, text="Tyres", font=("Arial", 25))#defining it as a label
         label.pack(pady=10, padx=10)#placement
-        label.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+        label.config(bg='black', fg='white')#colour scheme
 
         lblE = tk.Label(self,  text='FRONT', font=LARGE_FONT)#defining it as a label
         lblE.place(x=10, y=50)#placement
-        lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+        lblE.config(bg='black', fg='white')#colour scheme
 
         lblE = tk.Label(self,  text='REAR', font=LARGE_FONT)#defining it as a label
         lblE.place(x=410, y=50)#placement
-        lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+        lblE.config(bg='black', fg='white')#colour scheme
 
         susp_params = ['PRESSURE_STATIC']
 
@@ -515,7 +515,7 @@ class Tyres(tk.Frame):
         for i in susp_params:
             lblE = tk.Label(self,  text=i)#defining it as a label
             lblE.place(x=10, y=label_y)#placement
-            lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+            lblE.config(bg='black', fg='white')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=180, y=label_y)#placement
             inputE.config(bg='#74000c', fg='white')#colour scheme
@@ -527,7 +527,7 @@ class Tyres(tk.Frame):
         for i in susp_params:
             lblE = tk.Label(self,  text=i)#defining it as a label
             lblE.place(x=410, y=label_y)#placement
-            lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+            lblE.config(bg='black', fg='white')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=580, y=label_y)#placement
             inputE.config(bg='#74000c', fg='white')#colour scheme
@@ -537,11 +537,11 @@ class Tyres(tk.Frame):
         #defining it as a button
         mainpagebtn = tk.Button(self, text="Main page",command=lambda: controller.show_frame(MainPage))
         mainpagebtn.place(y=690, x=50)#placement
-        mainpagebtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        mainpagebtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
         submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('tyres.ini', front_input, rear_input, '[FRONT]', '[REAR]'))
         submitbtn.place(y=690, x=350)#placement
-        submitbtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        submitbtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
 #_______________________________________________________________________________
 #________________________ABOUT US PAGE______________________________________________________        
@@ -552,11 +552,11 @@ class Drivetrain(tk.Frame):
         tk.Frame.__init__(self, parent)
         label = tk.Label(self, text="Drivetrain", font=("Arial", 25))#defining it as a label
         label.pack(pady=10, padx=10)#placement
-        label.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+        label.config(bg='black', fg='white')#colour scheme
 
         lblE = tk.Label(self,  text='DIFFERENTIAL', font=LARGE_FONT)#defining it as a label
         lblE.place(x=10, y=50)#placement
-        lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+        lblE.config(bg='black', fg='white')#colour scheme
 
 
         susp_params = ['POWER', 'COAST', 'PRELOAD']
@@ -566,7 +566,7 @@ class Drivetrain(tk.Frame):
         for i in susp_params:
             lblE = tk.Label(self,  text=i)#defining it as a label
             lblE.place(x=10, y=label_y)#placement
-            lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+            lblE.config(bg='black', fg='white')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=180, y=label_y)#placement
             inputE.config(bg='#74000c', fg='white')#colour scheme
@@ -576,11 +576,11 @@ class Drivetrain(tk.Frame):
         #defining it as a button
         mainpagebtn = tk.Button(self, text="Main page",command=lambda: controller.show_frame(MainPage))
         mainpagebtn.place(y=690, x=50)#placement
-        mainpagebtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        mainpagebtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
         submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('drivetrain.ini', front_input, [], '[DIFFERENTIAL]', ''))
         submitbtn.place(y=690, x=350)#placement
-        submitbtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        submitbtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
 #_______________________________________________________________________________
 #________________________ABOUT US PAGE______________________________________________________        
@@ -591,11 +591,11 @@ class Brakes(tk.Frame):
         tk.Frame.__init__(self, parent)
         label = tk.Label(self, text="Brakes", font=("Arial", 25))#defining it as a label
         label.pack(pady=10, padx=10)#placement
-        label.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+        label.config(bg='black', fg='white')#colour scheme
 
         lblE = tk.Label(self,  text='Data', font=LARGE_FONT)#defining it as a label
         lblE.place(x=10, y=50)#placement
-        lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+        lblE.config(bg='black', fg='white')#colour scheme
 
 
         susp_params = ['FRONT_SHARE', 'MAX_TORQUE']
@@ -605,7 +605,7 @@ class Brakes(tk.Frame):
         for i in susp_params:
             lblE = tk.Label(self,  text=i)#defining it as a label
             lblE.place(x=10, y=label_y)#placement
-            lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+            lblE.config(bg='black', fg='white')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=180, y=label_y)#placement
             inputE.config(bg='#74000c', fg='white')#colour scheme
@@ -615,11 +615,11 @@ class Brakes(tk.Frame):
         #defining it as a button
         mainpagebtn = tk.Button(self, text="Main page",command=lambda: controller.show_frame(MainPage))
         mainpagebtn.place(y=690, x=50)#placement
-        mainpagebtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        mainpagebtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
         submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('brakes.ini', front_input, [], '[DATA]', ''))
         submitbtn.place(y=690, x=350)#placement
-        submitbtn.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+        submitbtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
 
 #_______________________________________________________________________________
@@ -627,21 +627,6 @@ class Brakes(tk.Frame):
 def main():
     window = Frames()#defining what the window will show --- it will have frames(pages)
     window.title('Redback Asseto Corsa Launcher')
-
-    # image2 = Image.open("hi3.jpg")
-    # image2 = image2.resize((960,540))
-    # test2 = ImageTk.PhotoImage(image2)
-    # label2 = tk.Label(image=test2, borderwidth=0)
-    # label2.image = test2
-    # label2.place(x=-100, y=50)
-
-    # image1 = Image.open("hi.png")
-    # #image1 = image1.resize((300,300))
-    # test = ImageTk.PhotoImage(image1)
-    # label1 = tk.Label(image=test, borderwidth=0)
-    # label1.image = test
-    # label1.place(x=575, y=-50)
-
     window.config(bg='#e8f8f5')#colour scheme
     window.geometry("800x800")#size of window
     window.resizable(width=False, height=False)#not letting the user resize the window
