@@ -262,7 +262,6 @@ class Help(tk.Frame):
         lblE.place(x=10, y=50)#placement
         lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
 
-
         #defining it as a button
         mainpagebtn = tk.Button(self, text="Main page",command=lambda: controller.show_frame(MainPage))
         mainpagebtn.place(y=470, x=50)#placement
@@ -281,11 +280,11 @@ class General(tk.Frame):
 
         lblE = tk.Label(self,  text='RACE', font=LARGE_FONT)#defining it as a label
         lblE.place(x=10, y=50)#placement
-        lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+        lblE.config(bg='black', fg='white')#colour scheme
 
         lblE = tk.Label(self,  text='TEMPERATURES', font=LARGE_FONT)#defining it as a label
         lblE.place(x=410, y=50)#placement
-        lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+        lblE.config(bg='black', fg='white')#colour scheme
 
         arb_params = ['TRACK', 'CAR']
         BASIC_params = ['AIR TEMP', 'ROAD TEMP']
@@ -298,7 +297,7 @@ class General(tk.Frame):
             lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=180, y=label_y)#placement
-            inputE.config(bg='#74000c', fg='#74000c')#colour scheme
+            inputE.config(bg='#74000c', fg='white')#colour scheme
             front_input.append(inputE)
             label_y = label_y +50
 
@@ -310,7 +309,7 @@ class General(tk.Frame):
             lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=580, y=label_y)#placement
-            inputE.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+            inputE.config(bg='#74000c', fg='white')#colour scheme
             rear_input.append(inputE)
             label_y = label_y +50
 
@@ -332,15 +331,15 @@ class Suspensions(tk.Frame):
         tk.Frame.__init__(self, parent)
         label = tk.Label(self, text="Suspensions", font=("Arial", 25))#defining it as a label
         label.pack(pady=10, padx=10)#placement
-        label.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+        label.config(bg='black', fg='white')#colour scheme
 
         lblE = tk.Label(self,  text='FRONT', font=LARGE_FONT)#defining it as a label
         lblE.place(x=10, y=50)#placement
-        lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+        lblE.config(bg='black', fg='white')#colour scheme
 
         lblE = tk.Label(self,  text='REAR', font=LARGE_FONT)#defining it as a label
         lblE.place(x=410, y=50)#placement
-        lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+        lblE.config(bg='black', fg='white')#colour scheme
 
         susp_params = ['TOE_OUT', 'STATIC_CAMBER', 'DAMP_BUMP', 'DAMP_FAST_BUMP', 
                         'DAMP_REBOUND', 'DAMP_FAST_REBOUND', 'SPRING_RATE', 'ROD_LENGTH', 
@@ -354,7 +353,7 @@ class Suspensions(tk.Frame):
             lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=180, y=label_y)#placement
-            inputE.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+            inputE.config(bg='#74000c', fg='white')#colour scheme
             front_input.append(inputE)
             label_y = label_y +50
 
@@ -366,7 +365,7 @@ class Suspensions(tk.Frame):
             lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=580, y=label_y)#placement
-            inputE.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+            inputE.config(bg='#74000c', fg='white')#colour scheme
             rear_input.append(inputE)
             label_y = label_y +50
     
@@ -389,15 +388,15 @@ class Suspensions_Heave(tk.Frame):
         tk.Frame.__init__(self, parent)
         label = tk.Label(self, text="Suspensions Heave", font=("Arial", 25))#defining it as a label
         label.pack(pady=10, padx=10)#placement
-        label.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+        label.config(bg='black', fg='white')#colour scheme
 
         lblE = tk.Label(self,  text='FRONT', font=LARGE_FONT)#defining it as a label
         lblE.place(x=10, y=50)#placement
-        lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+        lblE.config(bg='black', fg='white')#colour scheme
 
         lblE = tk.Label(self,  text='REAR', font=LARGE_FONT)#defining it as a label
         lblE.place(x=410, y=50)#placement
-        lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
+        lblE.config(bg='black', fg='white')#colour scheme
 
         susp_params = ['ROD_LENGTH', 'SPRING_RATE', 'DAMP_BUMP', 'DAMP_FAST_BUMP', 
                         'DAMP_REBOUND', 'DAMP_FAST_REBOUND']
@@ -410,7 +409,7 @@ class Suspensions_Heave(tk.Frame):
             lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=180, y=label_y)#placement
-            inputE.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+            inputE.config(bg='#74000c', fg='white')#colour scheme
             front_input.append(inputE)
             label_y = label_y +50
 
@@ -422,7 +421,7 @@ class Suspensions_Heave(tk.Frame):
             lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=580, y=label_y)#placement
-            inputE.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+            inputE.config(bg='#74000c', fg='white')#colour scheme
             rear_input.append(inputE)
             label_y = label_y +50
 
@@ -465,7 +464,7 @@ class Suspensions_Other(tk.Frame):
             lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=180, y=label_y)#placement
-            inputE.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+            inputE.config(bg='#74000c', fg='white')#colour scheme
             front_input.append(inputE)
             label_y = label_y +50
 
@@ -477,7 +476,7 @@ class Suspensions_Other(tk.Frame):
             lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=580, y=label_y)#placement
-            inputE.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+            inputE.config(bg='#74000c', fg='white')#colour scheme
             rear_input.append(inputE)
             label_y = label_y +50
 
@@ -519,7 +518,7 @@ class Tyres(tk.Frame):
             lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=180, y=label_y)#placement
-            inputE.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+            inputE.config(bg='#74000c', fg='white')#colour scheme
             front_input.append(inputE)
             label_y = label_y +50
 
@@ -531,7 +530,7 @@ class Tyres(tk.Frame):
             lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=580, y=label_y)#placement
-            inputE.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+            inputE.config(bg='#74000c', fg='white')#colour scheme
             rear_input.append(inputE)
             label_y = label_y +50
 
@@ -570,7 +569,7 @@ class Drivetrain(tk.Frame):
             lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=180, y=label_y)#placement
-            inputE.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+            inputE.config(bg='#74000c', fg='white')#colour scheme
             front_input.append(inputE)
             label_y = label_y +50
 
@@ -609,7 +608,7 @@ class Brakes(tk.Frame):
             lblE.config(bg='#e8f8f5', fg='#255D83')#colour scheme
             inputE = Entry(self)#defining it as a inputbox
             inputE.place(x=180, y=label_y)#placement
-            inputE.config(bg='#255D83', fg='#e8f8f5')#colour scheme
+            inputE.config(bg='#74000c', fg='white')#colour scheme
             front_input.append(inputE)
             label_y = label_y +50
 
