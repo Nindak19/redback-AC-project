@@ -247,6 +247,9 @@ class MainPage(tk.Frame):
         #submodule which links to the exit button to close the program
         
         window.destroy()
+class createtabs(tk.Button):
+    def __init__(self,master,**kwargs):
+        super().__init__(master = master)
 #_______________________________________________________________________________
 #________________________ABOUT US PAGE______________________________________________________        
 class Help(tk.Frame):
@@ -274,8 +277,42 @@ class General(tk.Frame):
     def __init__(self, parent, controller):
         
         tk.Frame.__init__(self, parent)
+        #button to switch to other pages, lambda is a must when switching pages
+        #defining it as a button
+        btnSort = tk.Button(self, text="Main",command=lambda: controller.show_frame(MainPage))
+        btnSort.place(x=0, y=0)#placement
+        btnSort.config(bg='#74000c', fg='#e8f8f5')#colour scheme
+
+        btnSort = tk.Button(self, text="General",command=lambda: controller.show_frame(General))
+        btnSort.place(x=38, y=0)#placement
+        btnSort.config(bg='#74000c', fg='#e8f8f5')#colour scheme
+
+        btnSort = tk.Button(self, text="Suspensions",command=lambda: controller.show_frame(Suspensions))
+        btnSort.place(x=88, y=0)#placement
+        btnSort.config(bg='#74000c', fg='#e8f8f5')#colour scheme
+
+        btnSort = tk.Button(self, text="Suspensions Heave",command=lambda: controller.show_frame(Suspensions_Heave))
+        btnSort.place(x=163, y=0)#placement
+        btnSort.config(bg='#74000c', fg='#e8f8f5')#colour scheme
+
+        btnSort = tk.Button(self, text="Suspensions Other",command=lambda: controller.show_frame(Suspensions_Other))
+        btnSort.place(x=274, y=0)#placement
+        btnSort.config(bg='#74000c', fg='#e8f8f5')#colour scheme
+
+        btnSort = tk.Button(self, text="Tyres",command=lambda: controller.show_frame(Tyres))
+        btnSort.place(x=382, y=0)#placement
+        btnSort.config(bg='#74000c', fg='#e8f8f5')#colour scheme
+
+        btnSort = tk.Button(self, text="Drivetrain",command=lambda: controller.show_frame(Drivetrain))
+        btnSort.place(x=419, y=0)#placement
+        btnSort.config(bg='#74000c', fg='#e8f8f5')#colour scheme
+
+        btnSort = tk.Button(self, text="Brakes",command=lambda: controller.show_frame(Brakes))
+        btnSort.place(x=480, y=0)#placement
+        btnSort.config(bg='#74000c', fg='#e8f8f5')#colour scheme
+
         label = tk.Label(self, text="General", font=("Arial", 25))#defining it as a label
-        label.pack(pady=10, padx=10)#placement
+        label.pack(pady=20, padx=10)#placement
         label.config(bg='black', fg='white')#colour scheme
 
         lblE = tk.Label(self,  text='RACE', font=LARGE_FONT)#defining it as a label
