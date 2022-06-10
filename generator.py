@@ -32,41 +32,38 @@ from time import time
 import subprocess
 
 #for now, just put the absolute file path below... We will use this to reference the vehicle we modify/update
-vehiclePath = "C:\\Program Files (x86)\Steam\\steamapps\\common\\assettocorsa\\content\\cars\\formula_sae_rb19"
+vehicle = "formula_sae_rb19"
+vehiclePath = "C:\\Program Files (x86)\Steam\\steamapps\\common\\assettocorsa\\content\\cars\\" + vehicle
+#the repo directory...
+currentDirectory = "redback-AC-project" # repo name 
 
 def main(): #assume for now we simply call "python generator.py i", argv[0] = file call, argv[1] is first command line arg if it exist
     # argv[1] = first argument, number of iterations (setups)
     # argv[2] = time of execution in minutes
     checkInputs()
-    checkFolderExists("generator/training_data")
-    f_counter = open("generator/training_data/counter.txt", "r")
-    cur_count = int(f_counter.readline())
-    f_counter.close()
+    checkFolderExists(currentDirectory+"/training_data")
     cur_time = time()
 
     i = 0
+    setup.storeData(vehiclePath)        # Currently doesn't do anything
     load()
-    subprocess.Popen("acs.exe", shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
+    subprocess.Popen("acs.exe", shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)   # Start Assetto Corsa
     while i < int(sys.argv[1]):
         if (time() - cur_time)/60 > int(sys.argv[2]):
-            os.system("taskkill /im acs.exe")
-            unload(cur_count)
+            os.system("taskkill /im acs.exe")       # Kill game when timer is up
+            unload(len(os.listdir(currentDirectory+"/training_data")))
             cur_time = time()
             i = i + 1
-            cur_count = cur_count + 1
             if i < int(sys.argv[1]):
                 load()
                 subprocess.Popen("acs.exe", shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
-    f_counter = open("generator/training_data/counter.txt", "w")
-    f_counter.write(str(cur_count))
-    f_counter.close()
-
+    
 def load():
-    setup.hideData(vehiclePath)
     setup.loadData(vehiclePath)
     
 def unload(counter):
-    setup.unloadData(vehiclePath, "generator/training_data", counter)
+    setup.unloadData(vehiclePath, currentDirectory+"/training_data", counter)
+    setup.copyData(vehiclePath)
 
 def checkInputs():
     if len(sys.argv)-1 != 2:
@@ -78,14 +75,14 @@ def checkInputs():
     if not sys.argv[2].isdigit() or not float(sys.argv[2]).is_integer() or float(sys.argv[2]) <= 0:
         print("WARNING: Ensure minutes for execution is a positive whole number")
         exit(-1)
+    if not os.path.isdir(vehiclePath+"\data"):
+        print("WARNING: Make sure the vehicle has a data folder")
+        exit(-1)
 
 def checkFolderExists(path):
     if not os.path.exists(path):
         try:
             os.mkdir(path)
-            f = open(path + "\counter.txt", "w")
-            f.write("0")
-            f.close()
         except Exception as e:
             print("Cannot generate directory path" + path)
         else:

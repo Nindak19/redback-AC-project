@@ -86,7 +86,6 @@ setup = {  #dictionary of tuples, where order is [static, minimum_value, maximum
         #race.ini
         '[RACE]': {
             "TRACK": [],
-            "MODEL": []
         }, "[TEMPERATURE]": {
             "AMBIENT": [],
             "ROAD": []
@@ -94,10 +93,8 @@ setup = {  #dictionary of tuples, where order is [static, minimum_value, maximum
     }
 }
 
-# def writetoJSONFile(path, setup):
-#     json.dump(setup, path)
 
-def populate_setup(ini_name, list1, list2, header1, header2):
+def populate_setup(ini_name, list1, list2, header1, header2, frame):
     # Reset each of the values for header1 to enter new values
     for parameter in setup[ini_name][header1]:
         setup[ini_name][header1][parameter] = []
@@ -108,6 +105,7 @@ def populate_setup(ini_name, list1, list2, header1, header2):
                 setup[ini_name][header1][parameter] = setup_value
                 break
     if list2 == []:
+        saved_label(frame)
         return
     else:
         # Reset each of the values for header2 to enter new values
@@ -119,6 +117,7 @@ def populate_setup(ini_name, list1, list2, header1, header2):
                 if setup[ini_name][header2][parameter] == []:
                     setup[ini_name][header2][parameter] = setup_value
                     break
+    saved_label(frame)
     return
         
 
@@ -126,9 +125,12 @@ def submit_function():
     files = [('JSON File', '*.json')]
     fileName = 'trial_data'
     filepos = asksaveasfile(filetypes = files,defaultextension = json, initialfile = fileName)
-    # writetoJSONFile(filepos, setup)
     json.dump(setup, filepos)
 
+def saved_label(frame):
+    label = Label(frame, text="Values saved", font=('Calibri 15'))
+    label.place(bordermode=OUTSIDE, height=10, width=10)
+    label.pack()
 
 #_______________________________________________________________________________
 #_______________________________SWITCHING FRAMES________________________________
@@ -286,7 +288,7 @@ class General(tk.Frame):
         lblE.place(x=410, y=50)#placement
         lblE.config(bg='black', fg='white')#colour scheme
 
-        arb_params = ['TRACK', 'CAR']
+        arb_params = ['TRACK']
         BASIC_params = ['AIR TEMP', 'ROAD TEMP']
 
         label_y = 100
@@ -318,7 +320,7 @@ class General(tk.Frame):
         mainpagebtn.place(y=690, x=50)#placement
         mainpagebtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
-        submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('race.ini', front_input, rear_input, '[RACE]', '[TEMPERATURE]'))
+        submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('race.ini', front_input, rear_input, '[RACE]', '[TEMPERATURE]', self))
         submitbtn.place(y=690, x=350)#placement
         submitbtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
@@ -376,7 +378,7 @@ class Suspensions(tk.Frame):
 
         # button to enter suspension values into setup dictionary
         # if giving in raw lists don't work, then just apply .get() to each value and make new lists (this could be done in submit_function)
-        submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('suspensions.ini', front_input, rear_input, '[FRONT]', '[REAR]'))
+        submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('suspensions.ini', front_input, rear_input, '[FRONT]', '[REAR]', self))
         submitbtn.place(y=690, x=350)#placement
         submitbtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
@@ -430,7 +432,7 @@ class Suspensions_Heave(tk.Frame):
         mainpagebtn.place(y=690, x=50)#placement
         mainpagebtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
-        submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('suspensions.ini', front_input, rear_input, '[HEAVE_FRONT]', '[HEAVE_REAR]'))
+        submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('suspensions.ini', front_input, rear_input, '[HEAVE_FRONT]', '[HEAVE_REAR]', self))
         submitbtn.place(y=690, x=350)#placement
         submitbtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
@@ -485,7 +487,7 @@ class Suspensions_Other(tk.Frame):
         mainpagebtn.place(y=690, x=50)#placement
         mainpagebtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
-        submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('suspensions.ini', front_input, rear_input, '[ARB]', '[BASIC]'))
+        submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('suspensions.ini', front_input, rear_input, '[ARB]', '[BASIC]', self))
         submitbtn.place(y=690, x=350)#placement
         submitbtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 #_______________________________________________________________________________
@@ -539,7 +541,7 @@ class Tyres(tk.Frame):
         mainpagebtn.place(y=690, x=50)#placement
         mainpagebtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
-        submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('tyres.ini', front_input, rear_input, '[FRONT]', '[REAR]'))
+        submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('tyres.ini', front_input, rear_input, '[FRONT]', '[REAR]', self))
         submitbtn.place(y=690, x=350)#placement
         submitbtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
@@ -578,7 +580,7 @@ class Drivetrain(tk.Frame):
         mainpagebtn.place(y=690, x=50)#placement
         mainpagebtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
-        submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('drivetrain.ini', front_input, [], '[DIFFERENTIAL]', ''))
+        submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('drivetrain.ini', front_input, [], '[DIFFERENTIAL]', '', self))
         submitbtn.place(y=690, x=350)#placement
         submitbtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
@@ -617,7 +619,7 @@ class Brakes(tk.Frame):
         mainpagebtn.place(y=690, x=50)#placement
         mainpagebtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
-        submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('brakes.ini', front_input, [], '[DATA]', ''))
+        submitbtn = tk.Button(self, text="Submit Values", command= lambda: populate_setup('brakes.ini', front_input, [], '[DATA]', '', self))
         submitbtn.place(y=690, x=350)#placement
         submitbtn.config(bg='#74000c', fg='#e8f8f5')#colour scheme
 
@@ -638,22 +640,3 @@ if __name__ == '__main__':
 
 
 
-
-
-'''
-Click submit button:
-submit_function(ini file (str), header (str, e.g. [FRONT]), list):
-	populate_setup(ini file (str), header (str, e.g. [FRONT]), setup, list)
-	
-populate_setup(ini, header, setup, list):
-for value in list:
-	setup_value = value.get()
-	for parameter in setup[ini][header]:
-		setup[ini][header][parameter] = setup_value
-return
-
-
-FOR NOW PLAN IS:
-two buttons for front and rear 
-run submit_function for each by giving name of ini file and header 
-'''

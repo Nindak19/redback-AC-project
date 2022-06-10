@@ -2,16 +2,11 @@ import random
 import shutil # use to copy over folder
 import os
 import itertools
+import json
+tmp = "\default"
+user = os.getlogin()
 
-
-#we need a folder location so we can read in and then export new Data folders, assume this is our folder location for now
-
-#generate setup and load into...
-data = 'C:\\Program Files (x86)\\Steam\\steamapps\\common\\assettocorsa\\content\\cars\\formula_sae_rb19\\data'
-
-counter = 0
-
-tmp = "\original"
+currentDirectory = "redback-AC-project" # repo name 
 
 setup = {  #dictionary of tuples, where order is [static, minimum_value, maximum_value]
     'suspensions.ini': {
@@ -55,12 +50,12 @@ setup = {  #dictionary of tuples, where order is [static, minimum_value, maximum
             'DAMP_REBOUND': [0, 0, 4000],
             'DAMP_FAST_REBOUND': [0,0, 4000]
         }, '[ARB]': {
-            'FRONT': [0, 0, 150000], #arb_F
-            'REAR': [0, 0, 150000] #arb_R
+            'FRONT': [0, 0, 30000], #arb_F
+            'REAR': [0, 0, 30000] #arb_R
         }, '[BASIC]': {
             'WHEELBASE': [1.55, 1.525, 1.9], #wheelbase
             'CG_LOCATION': [0.483, 0.35, 0.6] #center of mass
-        }
+        } 
     }, 'tyres.ini': {
         #tyres.ini file
         '[FRONT]': {
@@ -84,40 +79,44 @@ setup = {  #dictionary of tuples, where order is [static, minimum_value, maximum
     }
 }
 
-def generateSetup():
-    global setup
-    nSetup = {}
-    for config in setup:
-        nSetup[config] = {}
-        for heading in setup[config]:
-            nSetup[config][heading] = {}
-            for parameter in setup[config][heading]:
-                min = setup[config][heading][parameter][1]
-                max = setup[config][heading][parameter][2]
-                nSetup[config][heading][parameter] = round(random.uniform(min,max),5)
-                value = nSetup[config][heading][parameter]
-    return nSetup
 
-def loadData(vehicleF):
-    setup = generateSetup()
-    refFol = vehicleF + tmp
-    setupFol = vehicleF + "\data"
-    shutil.copytree(refFol, setupFol, symlinks = True)
-    if os.path.exists(setupFol+"\csv_data"):
-        shutil.rmtree(setupFol+"\csv_data")
 
-    for config in setup:
-        f_data = open(refFol + '\\' + config, 'r')
-        f_setup = open(setupFol + '\\' + config, 'w')
+# def generateSetup():    # Generates a randomised setup (this needs to change so that it takes in setup values from the UI)
+#     global setup
+#     nSetup = {}
+#     for config in setup:
+#         nSetup[config] = {}
+#         for heading in setup[config]:
+#             nSetup[config][heading] = {}
+#             for parameter in setup[config][heading]:
+#                 min = setup[config][heading][parameter][1]
+#                 max = setup[config][heading][parameter][2]
+#                 nSetup[config][heading][parameter] = round(random.uniform(min,max),5)   # nSetup[config][heading][parameter] = nSetup[config][heading][parameter][0]
+#     return nSetup
+
+def loadData(vehicleFolder):    # Writes the setup into f_setup(vehicleFolder is ...content/cars/formula_sae_rb19)
+    jsonFile = open(f"{currentDirectory}\\trial_data.json")
+    setup = json.load(jsonFile)
+    # setup = generateSetup()     
+    referenceFolder = vehicleFolder + tmp   # referenceFolder is the vehicleFolder + tmp (\default) contains the unchanged setup 
+    setupFolder = vehicleFolder + "\data"   # setupFolder is a new folder 
+    if os.path.exists(setupFolder+"\csv_data"):
+        shutil.rmtree(setupFolder+"\csv_data")  # If (...content/cars/formula_sae_rb19/data/csv_data) exists, delete that directory
+    for config in setup:                        # Loops through each ini file (suspensions.ini, tyres.ini etc)
+        if config == 'race.ini':
+            setup_raceini(setup, vehicleFolder)
+            continue
+        f_data = open(referenceFolder + '\\' + config, 'r')     # Open (with read permissions) directory ...content/cars/formula_sae_rb19/default/(.ini file)
+        f_setup = open(setupFolder + '\\' + config, 'w')        # Open (with write permissions) directory ...content/cars/data/formula_sae_rb19/data/(.ini file)
         heading = ''
         newLine = ''
-        for line in f_data:
-            heading = getHeading(line, heading, setup[config].keys())
-            if heading != '':
-                newLine = adjustValue(setup[config][heading], line)
-                if newLine == '':
+        for line in f_data:                                     # For each line in the default/.ini file
+            heading = getHeading(line, heading, setup[config].keys())   # setup[config].keys() is a list of all headings i.e. ([FRONT], [HEAVE_FRONT] etc.)
+            if heading != '':                               
+                newLine = adjustValue(setup[config][heading], line)     # setup[config][heading] = e.g. entire dictionary of [DIFFERENTIAL] = {'POWER': 0.40738, 'COAST': 0.59882, 'PRELOAD': 24.59209}
+                if newLine == '':                                       # If newLine is an empty string, then write the original line back into the .ini file
                     f_setup.write(line)
-                else:
+                else:                                                   # Otherwise write the new parameter into the .ini file
                     f_setup.write(newLine)
             else:
                 f_setup.write(line)
@@ -125,24 +124,63 @@ def loadData(vehicleF):
         f_setup.close()
     return
 
-def unloadData(vehicleFol, setupFol, counter):
-    setupData = vehicleFol + "\data_" + str(counter)
-    os.rename(vehicleFol + "\data", setupData)
-    shutil.move(setupData, setupFol)
+def unloadData(vehicleFolder, setupFolder, counter):
+    if os.path.isdir(setupFolder+"\data_+"+str(counter)):
+        print("ERROR: " +setupFolder+"\data_+"+str(counter)+ "already exists in " + setupFolder)
+        exit(-1)
+    arr = os.listdir(vehicleFolder + "\csv_data")
+    print(arr)
+    csv_data = vehicleFolder + "/csv_data/" + arr[0]        # arr[0] is 2022-05-26-20-21_losarcos
+    setupData = vehicleFolder + "\data_" + str(counter)
+    os.rename(vehicleFolder + "\data", setupData)   # Rename ...content/cars/formula_sae_rb19/data -> ...content/cars/formula_sae_rb19/data/1
+    shutil.move(csv_data, setupData)                # Move ...content/cars/formula_sae_rb19/csv_data/2022-05-26-20-21_losarcos -> ...content/cars/formula_sae_rb19/data/12
+    shutil.move(setupData, setupFolder)             # Moves ...content/cars/formula_sae_rb19/data/12 -> steamapps/common/assettocorsa/generator_test/training_data
+    shutil.rmtree(vehicleFolder + "\csv_data")      # Remove directory ...content/cars/formula_sae_rb19/csv_data
 
-def getHeading(line, heading, keys):
+def getHeading(line, heading, keys):                # getHeading returns either a heading or key
     for key in keys:
         if key in line:
-            return key
-    return heading
+            return key                              # returns a key if the line that is being compared to is one of the keys in the current ini file (e.g. suspensions.ini), e.g. [FRONT], [HEAVE_FRONT] (this is returned each time a new heading is found)
+    return heading                                  # returns heading (such as [FRONT] or '' if it is an empty line) if no matched key is found in the keys list (the same heading is returned repeatedly until a new heading is found))
 
-def adjustValue(heading_dict, line):
-    line = line.split('=')[0]
+def adjustValue(heading_dict, line):                # Returns a new line which is either an empty string if the line was not a parameter that needs to be changed or a string containing a parameter with a new value, e.g. DAMP_FAST_REBOUND=2376.03006
+    line = line.split('=')[0]                       # If it is a parameter being changed, grabs only the parameter name, e.g. If line being split = 'WHEELBASE=1.54', line = WHEELBASE
     for parameter in heading_dict:
         if parameter == line:
             return parameter + '=' + str(heading_dict[parameter]) + '\n'
     return ''
 
-def hideData(vehicleFol):
-    if not os.path.exists(vehicleFol+tmp):
-        os.rename(vehicleFol + "\data", vehicleFol + tmp)
+def storeData(vehicleFolder):
+    if not os.path.exists(vehicleFolder+tmp):
+        shutil.copytree(vehicleFolder + "\data", vehicleFolder + tmp)
+        shutil.copyfile(f"C:\\Users\\{user}\\Documents\\Assetto Corsa\\cfg\\race.ini", vehicleFolder + tmp)
+    if os.path.exists(vehicleFolder+"data\csv_data"):
+        shutil.rmtree(setupFolder+"data\csv_data")
+
+def copyData(vehicleFolder):
+    shutil.copytree(vehicleFolder+tmp, vehicleFolder+"\data")
+    os.remove(vehicleFolder+"\\data\\race.ini")
+
+def setup_raceini(setup, vehicleFolder):
+    raceSetup = f"C:\\Users\\{user}\\Documents\\Assetto Corsa\\cfg\\race.ini"
+    raceDefault = vehicleFolder + tmp + "\\race.ini"
+    f_data = open(raceDefault, 'r')
+    f_setup = open(raceSetup, 'w')
+    heading = ''
+    newLine = ''
+    for line in f_data:
+        heading = getHeading(line, heading, setup['race.ini'].keys())
+        if heading != '':
+            newLine = adjustValue(setup['race.ini'][heading], line)
+            if newLine == '':
+                f_setup.write(line)
+            else:
+                f_setup.write(newLine)
+        else:
+            f_setup.write(line)
+    f_data.close()
+    f_setup.close()
+    return
+
+
+
